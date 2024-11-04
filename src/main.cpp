@@ -1,18 +1,29 @@
 #include <Arduino.h>
+#include <WiFi.h>
+#include <WebServer.h>
 
-// put function declarations here:
-int myFunction(int, int);
+const char* ssid = "ESP32-Access-Point";
+const char* password = "12345678";
+
+WebServer server(80);
+
+void handleRoot() {
+  server.send(200, "text/html", "<html><body><h1>Hello, World!</h1></body></html>");
+}
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(115200);
+  WiFi.softAP(ssid, password);
+
+  IPAddress IP = WiFi.softAPIP();
+  Serial.print("AP IP address: ");
+  Serial.println(IP);
+
+  server.on("/", handleRoot);
+  server.begin();
+  Serial.println("HTTP server started");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  server.handleClient();
 }
