@@ -2,13 +2,14 @@
 #include <WiFi.h>
 #include <WebServer.h>
 
-const char* ssid = "ESP32-Access-Point";
-const char* password = "12345678";
+const char* ssid = "ESP32-Carlao";
+const char* password = "valeriomoraes";
 
 WebServer server(80);
 
 void handleRoot() {
-  server.send(200, "text/html", "<html><body><h1>Hello, World!</h1></body></html>");
+  server.send(200, "text/html", "<html><body><h1>ESP do Carlao</h1><p>Teste do ESP32 na aula de ECOP11A</p></body></html>");
+  Serial.println("Pagina Enviada ao Cliente");
 }
 
 void setup() {
